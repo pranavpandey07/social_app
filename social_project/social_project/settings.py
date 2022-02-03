@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     "post_app",
     "user_app",
     "comment_app",
-    "rest_framework"
+    "rest_framework",
+    "rest_framework.authtoken"
 ]
 
 MIDDLEWARE = [
@@ -58,7 +59,7 @@ ROOT_URLCONF = 'social_project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [r'C:\Users\admin\Desktop\social_networking_app\social_project\social_project\templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -125,3 +126,4 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+AUTH_USER_MODEL = 'user_app.user'
