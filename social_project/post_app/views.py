@@ -22,7 +22,7 @@ from rest_framework import status
 # Create your views for Snacks
 class GetOrCreatePost(APIView):
     renderer_classes=[TemplateHTMLRenderer]
-    template_name='navbar.html'
+    template_name='home.html'
     
     def get(self,request):
         post_data=models.post.objects.all()
@@ -30,6 +30,7 @@ class GetOrCreatePost(APIView):
         return Response(data={'Data':post_serialized_data.data})
     
     def post(self,request):
+        
         request_data=request.data
         print(request.user)
         post_obj=PostSerializer(data=request_data)
@@ -75,5 +76,54 @@ class GetPutDeletePost(APIView):
 
 
 
+'''def home(request,short_query):
+    if not short_query or short_query is None:
+        return render(request,'home.html')
+    else:
+        try:
+            check=shorturl.objects.get(short_query=short_query)
+            check.visits=check.visits+1
+            check.save()
+            url_to_redirect=check.original_url
+            return redirect (url_to_redirect)
+        except shorturl.DoesNotExist:
+            return render(request,'home.html',{'error':"error"}) '''
 
+class LikeView(APIView):
+    
+    def get(self,request,id):
+        try:
+            post_data=models.post.objects.get(post_id=id)
+            post_data.likes_counts=post_data.likes_counts+1
+            post_data.save()
+            #post_serialized_data=PostSerializer(post_data)
+            return Response(data={'Data':"Liked the Post!!"})
+        
+        except models.post.DoesNotExist:
+            return Response(data={'Data':"Not Present"},status=404)
 
+class DislikeView(APIView):
+    
+    def get(self,request,id):
+        try:
+            post_data=models.post.objects.get(post_id=id)
+            post_data.dislikes_count=post_data.dislikes_count+1
+            post_data.save()
+            #post_serialized_data=PostSerializer(post_data)
+            return Response(data={'Data':"Disliked the Post!!"})
+        
+        except models.post.DoesNotExist:
+            return Response(data={'Data':"Not Present"},status=404)
+
+class ShareView(APIView):
+    
+    def get(self,request,id):
+        try:
+            post_data=models.post.objects.get(post_id=id)
+            post_data.shares_count=post_data.shares_count+1
+            post_data.save()
+            #post_serialized_data=PostSerializer(post_data)
+            return Response(data={'Data':"Sharing the post!!"})
+        
+        except models.post.DoesNotExist:
+            return Response(data={'Data':"Not Present"},status=404)

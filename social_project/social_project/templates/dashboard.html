@@ -1,57 +1,26 @@
-{% extends 'nav.html' %}
+{% extends 'navbar.html' %}
 
 {% block content %}
 
-<form action="{% url 'generate' %}" method="POST">
-                {% csrf_token %}
-                <div class="form-group">
-                    <input type="url" name="original" class="form-control" placeholder="Original Url">
-                </div>
-                <div class="form-group">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">http://localhost:8000/</div>
-                        <input type="text" name="short" class="form-control" placeholder="Short Char (6 chars)"
-                            maxlength="6" id="short">
 
-                    </div>
-                    <p id="shorthelp" class="form-text text-muted">Leave It Blank To generate randomly.</p>
-                </div>
-                <div class="form-group">
-                    <input type="submit" class="btn btn-primary px-4" value="Generate">
-                </div>
-</form>
-        </div>
-    </div>
-</div>
 
 
 <div class="container my-4">
     <div class="row">
         <div class="col-12 text-center">
-            <h4>Your Url's</h4>
+            <h4>Your </h4>
         </div>
     </div>
     <div class="row justify-content-between">
 
-        {% for u in urls %}
+        {% for u in Data %}
 
         <div class="col-10 col-sm-10 col-md-6 mb-2 mx-auto">
 
             <div style="overflow: hidden;" class="customcontainer p-2">
 
-                <p style="text-overflow: ellipsis;">Original : <a href="{{ u.original_url }}" target="_blank"
-                        class="card-link">{{ u.original_url }}</a>
-                </p>
-
-                <p>Shorten : <a href="http://localhost:8000/{{ u.short_query }}" target="_blank"
-                        class="card-link">http://localhost:8000/{{ u.short_query }}</a></p>
-                <div class="row justify-content-between">
-                    <div class="col-6 col-sm-6 ">
-                        <h3>Visits : {{ u.visits }} </h3>
-                    </div>
-                    
-                   
-                </div>
+                <p style="text-overflow: ellipsis;"> {{u}}</p>
+           </div>
 
             </div>
 
@@ -86,3 +55,20 @@
 </html>
 
 {% endblock %}
+
+
+
+
+'''user_id=models.AutoField(blank=False,primary_key = True,)
+    username=models.CharField(blank=True,max_length=100)
+    first_name=models.CharField(blank=False,max_length=20)
+    last_name=models.CharField(blank=False,max_length=20)
+    mobile_num=models.CharField(max_length=10,unique=True)
+    email=models.EmailField(unique=True)
+    password=models.CharField(max_length=30)
+    address=models.CharField(max_length=100)
+    state = models.CharField(max_length=100)
+    country = models.CharField(max_length=100)
+    zip_code = models.CharField(max_length=20)
+    created_at=models.DateTimeField(auto_now_add=True)
+    updated_at=models.DateTimeField(auto_now=True)'''

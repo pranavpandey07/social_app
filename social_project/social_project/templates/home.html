@@ -1,12 +1,53 @@
-{% extends 'nav.html' %}
+{% extends 'navbar.html' %}
 
 {% block content %}
 
 
-<h1 class="text-center">Welcome!!! <h2>
-<h2 class="text-center">To our Url shortening services.<h2>
-</body>
+<h1 class="text-center">Welcome! To Our Social Networking Platform. <h1>
+
+    
+    {% for u in Data %}
+    <div class="card">
+    
+
+        <div style="overflow: hidden;" class="customcontainer p-2">
+            <p style="text-overflow: ellipsis;">{{u.post_content}}</p>
+            <p style="color:green;""> &#128064; Views :-{{u.views}} </p>
+            <form>
+            <button style="background-color: pink;" type="button">
+                    &#128077; Like
+                    {{u.likes_counts}}
+                    <a href="{% url 'like' u.post_id %}"  </a>
+            </button type="submit">
+        </form>
+
+        <form>
+            <button style="background-color: red;" type="button">
+                        &#128078; Dislike
+                        {{u.dislikes_count}}
+                       <a href="{% url 'dislike' u.post_id %}"  </a> 
+            </button type="submit">
+        </form>
+            
+        <form>
+            <button style="background-color: yellow;" type="button">
+                            &#9829; Share
+                            {{u.shares_count}}
+                            <a href="{% url 'share' u.post_id %}"  </a>
+            </button type="submit">
+        </form>
+                
+        </div>
+
+    
+    </div>
+</body >
+
+        {% endfor %}
+
+
 
 </html>
 
 {% endblock %}
+

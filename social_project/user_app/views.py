@@ -14,6 +14,8 @@ from django.contrib.auth import logout
 from rest_framework.permissions import IsAuthenticated,AllowAny
 from django.contrib.auth.hashers import make_password,check_password
 from rest_framework import status
+from rest_framework.renderers import TemplateHTMLRenderer
+from django.contrib.auth.hashers import make_password
 
 
 
@@ -22,6 +24,8 @@ from rest_framework import status
 
 # Create your views for Snacks
 class GetOrCreateUser(APIView):
+    renderer_classes=[TemplateHTMLRenderer]
+    template_name='dashboard.html'
     
     def get(self,request):
         user_data=models.user.objects.all()

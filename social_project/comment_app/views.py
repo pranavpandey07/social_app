@@ -8,6 +8,8 @@ from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import User
 from django.contrib.auth import logout
 from rest_framework.permissions import IsAuthenticated,AllowAny
+from rest_framework.renderers import TemplateHTMLRenderer
+from django.contrib.auth.hashers import make_password
 
 
 
@@ -15,8 +17,12 @@ from rest_framework.permissions import IsAuthenticated,AllowAny
 
 # Create your views for Snacks
 class GetOrCreateComment(APIView):
+    renderer_classes=[TemplateHTMLRenderer]
+    template_name='dashboard.html'
     
     def get(self,request):
+        #renderer_classes=[TemplateHTMLRenderer]
+        #template_name='dashboard.html'
         comment_data=models.comment.objects.all()
         comment_serialized_data=CommentSerializer(comment_data,many=True)
         return Response(data={'Data':comment_serialized_data.data})
@@ -64,5 +70,33 @@ class GetPutDeleteComment(APIView):
             return Response(data={'Status':'Deleted'})
         except models.comment.DoesNotExist:
             return Response(data={'Data':"Not Present"},status=404)
+
+
+class LikeView(APIView):
+    
+    def get(self,request,id):
+        try:
+            post_data=models.comment.objects.get(comment_id=id)
+            post_data.likes_counts=post_data.likes_counts+1
+            post_data.save()
+            #post_serialized_data=PostSerializer(post_data)
+            return Response(data={'Data':"Liked the Comment!!"})
+        
+        except models.comment.DoesNotExist:
+            return Response(data={'Data':"Not Present"},status=404)
+
+class DislikeView(APIView):
+    
+    def get(self,request,id):
+        try:
+            post_data=models.comment.objects.get(comment_id=id)
+            post_data.dislikes_count=post_data.dislikes_count+1
+            post_data.save()
+            #post_serialized_data=PostSerializer(post_data)
+            return Response(data={'Data':"Disliked the Comment!!"})
+        
+        except models.comment.DoesNotExist:
+            return Response(data={'Data':"Not Present"},status=404)
+
 
 
